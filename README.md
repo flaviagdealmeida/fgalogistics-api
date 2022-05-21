@@ -4,11 +4,12 @@
 [![Eclipse](https://badgen.net/badge/icon/eclipse?icon=eclipse&label)](https://https://eclipse.org/)
 
 <h1 align="center"> FGA Logistics </h1>
-<p align="center">🚀 API em construção desenvolvida durante aulas de Spring Boot, Data, Security</p>
+<p align="center">🚀 API em construção desenvolvida durante aulas de Spring Boot, Data, Security </p>
+<p align="center"> Modelo semana de projetos Algaworks </p>
 
 <hr>
 
-<img src="modelagem/modelagem.png" />
+<img src="modelagem/modelagem.png" width="150px" height="150px" />
 
 <h3> Referências </h3>
 
