@@ -9,7 +9,7 @@
 
 <hr>
 
-<img  align="center" src="modelagem/modelagem.png" width="350px" height="350px" />
+<img  src="modelagem/modelagem.png" width="450px" height="350px" />
 
 <h3> Referências </h3>
 
