@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
 
-import br.com.fgalogistics.validation.ValidationGroups;
+import br.com.fgalogistics.domain.validation.ValidationGroups;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

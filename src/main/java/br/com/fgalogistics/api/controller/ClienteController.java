@@ -1,9 +1,10 @@
-package br.com.fgalogistics.controller;
+package br.com.fgalogistics.api.controller;
 
 import java.util.List;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fgalogistics.domain.model.Cliente;
-import br.com.fgalogistics.service.ClienteService;
+import br.com.fgalogistics.domain.service.ClienteService;
 
 @RestController
 @RequestMapping("cliente/v1")
@@ -26,6 +27,9 @@ public class ClienteController {
 
 	@Autowired
 	ClienteService service;
+	
+	@Autowired
+	ModelMapper modelMapper;
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)

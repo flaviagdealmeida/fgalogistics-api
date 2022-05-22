@@ -1,4 +1,4 @@
-package br.com.fgalogistics.validation;
+package br.com.fgalogistics.domain.validation;
 
 public interface ValidationGroups {
 

@@ -2,7 +2,10 @@ package br.com.fgalogistics.domain.model;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,16 +14,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.groups.ConvertGroup;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
-
-import br.com.fgalogistics.validation.ValidationGroups;
+import br.com.fgalogistics.domain.exception.NegocioException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,27 +33,53 @@ public class Entrega {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Valid //para validar os dados que vem da relação com o cliente
-	@ConvertGroup(from=Default.class, to=ValidationGroups.ClienteId.class)
+
+	@Valid // para validar os dados que vem da relação com o cliente
 	@NotNull
-	@ManyToOne //padrão para o campo ID
+	@ManyToOne // padrão para o campo ID
 	private Cliente cliente;
-	
-	@Embedded //quando agregamos o valor de destinatario na tabela de entrega
+
+	@Embedded // quando agregamos o valor de destinatario na tabela de entrega
 	private Destinatario destinatario;
-	
+
+	@OneToMany(mappedBy = "entrega", cascade = CascadeType.ALL)
+	private List<Ocorrencia> ocorrencias = new ArrayList<>();
+
 	private BigDecimal taxa;
-	
-	@JsonProperty(access = Access.READ_ONLY)
-	@Enumerated(EnumType.STRING) //armazena o texto da enumeração
+
+	@Enumerated(EnumType.STRING) // armazena o texto da enumeração
 	private StatusEntrega status;
-	
-	@JsonProperty(access = Access.READ_ONLY)
-	private OffsetDateTime dataPedido; //mostra o GMT
-	
-	@JsonProperty(access = Access.READ_ONLY)
+
+	private OffsetDateTime dataPedido; // mostra o GMT
+
 	private OffsetDateTime dataFinalizacao;
-		
-	
+
+	public Ocorrencia addOcorrencia(String descricao) {
+		Ocorrencia ocorrencia = new Ocorrencia();
+		ocorrencia.setDescricao(descricao);
+		ocorrencia.setDataRegistro(OffsetDateTime.now());
+		ocorrencia.setEntrega(this);
+
+		this.getOcorrencias().add(ocorrencia);
+		return ocorrencia;
+
+	}
+
+	public void finalizar() {
+		if (naoPodeSerFinalizada()) {
+			throw new NegocioException("Entrega não pode ser finalizada");
+		}
+
+		setStatus(StatusEntrega.FINALIZADA);
+		setDataFinalizacao(OffsetDateTime.now());
+	}
+
+	public boolean podeSerFinalizada() {
+		return StatusEntrega.PENDENTE.equals(getStatus());
+	}
+
+	public boolean naoPodeSerFinalizada() {
+		return !podeSerFinalizada();
+	}
+
 }

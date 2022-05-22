@@ -1,19 +1,19 @@
-package br.com.fgalogistics.service;
+package br.com.fgalogistics.domain.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.fgalogistics.domain.exception.ResourceNotFoundException;
 import br.com.fgalogistics.domain.model.Cliente;
-import br.com.fgalogistics.exception.ResourceNotFoundException;
-import br.com.fgalogistics.repository.ClienteRepository;
+import br.com.fgalogistics.domain.repository.ClienteRepository;
 
 @Service
 public class ClienteService {
 	
 	@Autowired 
-	ClienteRepository repository;
+	private ClienteRepository repository;
 	
 	
 	public Cliente create(Cliente cliente) {

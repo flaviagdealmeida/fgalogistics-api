@@ -1,11 +1,11 @@
-package br.com.fgalogistics.dto;
+package br.com.fgalogistics.api.model;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class DestinatarioDTO {
+public class DestinatarioModel {
 	
 	private String nome;
 	private String logradouro;
